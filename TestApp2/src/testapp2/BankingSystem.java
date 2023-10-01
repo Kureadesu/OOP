@@ -4,6 +4,8 @@
  */
 package testapp2;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kurea
@@ -57,6 +59,11 @@ public class BankingSystem extends javax.swing.JFrame {
         jButton3.setText("Change Password");
 
         jButton4.setText("Logout");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,8 +123,7 @@ public class BankingSystem extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(name)
-                        .addGap(87, 87, 87)))
+                        .addComponent(name)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -163,6 +169,16 @@ public class BankingSystem extends javax.swing.JFrame {
         nextFrame.show();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int op = JOptionPane.showConfirmDialog(this, "Do you want to logout?");
+        switch (op){
+            case 0 -> System.exit(0);
+            default -> {
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
