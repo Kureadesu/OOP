@@ -178,9 +178,9 @@ public class Login1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        BankingSystem nextFrame = new BankingSystem();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/table1", "root", "$4Y my n4m3");
             String sql = "Select * from testdb where username=? and password=?";
             PreparedStatement pst = con.prepareStatement(sql);
@@ -190,7 +190,6 @@ public class Login1 extends javax.swing.JFrame {
             
             if(rs.next()){
                 JOptionPane.showMessageDialog(null, "Login successful!");
-                BankingSystem nextFrame = new BankingSystem();
                 nextFrame.show();
                 this.dispose();
             }else {
