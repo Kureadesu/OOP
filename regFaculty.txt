@@ -1,0 +1,57 @@
+String dept = String.valueOf(jComboBox1.getSelectedItem());
+        String dob = jTextField2.getText();
+        String Add = jTextField3.getText();
+        String conNum = jTextField4.getText();
+        String sub1 = jTextField5.getText();
+        String sub2 = jTextField1.getText();
+        String sub3 = jTextField6.getText();
+        
+        try
+        {
+            conn = DriverManager.getConnection(url, "root", "$4Y my n4m3");
+            pst = conn.prepareStatement("UPDATE `enrollmentsys`.`logindatafaculty` SET `Department` = ?, `DOB` = ?, `Address` = ?, `ContactNum` = ?, `Subject1` = ?, `Subject2` = ?, `Subject3` = ? WHERE `FacultyID` = ?");
+            
+            pst.setString(1, dept);
+            pst.setString(2, dob);
+            pst.setString(3, Add);
+            pst.setString(4, conNum);
+            pst.setString(5, sub1);
+            pst.setString(6, sub2);
+            pst.setString(7, sub3);
+            pst.setString(8, JOptionPane.showInputDialog(this, "Confirm FacultyID: ", "Faculty ID", JOptionPane.OK_CANCEL_OPTION));
+            
+            if (Boolean.valueOf(dob.equals("")) || Boolean.valueOf(dept.equals("")) || Boolean.valueOf(dob.equals("")) || Boolean.valueOf(Add.equals("")) || Boolean.valueOf(conNum.equals("")) || Boolean.valueOf(sub1.equals("")) || Boolean.valueOf(sub2.equals("")) || Boolean.valueOf(sub3.equals("")))
+            {
+                JOptionPane.showMessageDialog(null, "please fill out all fields.", "Registration", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Registration complete.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                pst = conn.prepareStatement("SELECT Name FROM `enrollmentsys`.`logindatafaculty` WHERE `FacultyID` = ?");
+                pst.setString(1, JOptionPane.showInputDialog(this, "Confirm FacultyID: ", "Faculty ID", JOptionPane.OK_CANCEL_OPTION));
+                
+                // create a new database per faculty account:
+                String newTable = JOptionPane.showInputDialog(null, "Enter class list name: ", "table name_facultyID", JOptionPane.OK_CANCEL_OPTION);
+                pst = conn.prepareStatement("CREATE TABLE `enrollmentsys`.`class_"+ newTable + "` (`id` INT NOT NULL,"
+                        + "`StudentID` VARCHAR(30) NULL,"
+                        + "`Sname` VARCHAR(75) NULL,"
+                        + "`Section` VARCHAR(5) NULL,"
+                        + "`Prelim` VARCHAR(10) NULL,"
+                        + "`Midterm` VARCHAR(10) NULL,"
+                        + "`Finals` VARCHAR(10) NULL,"
+                        + "PRIMARY KEY (`id`))");                
+                rs = pst.executeQuery();
+                
+                if (rs.next())
+                {
+                    String name = rs.getString("Name");
+                    JOptionPane.showConfirmDialog(null, "Class list created.", "Register", JOptionPane.OK_OPTION);
+                    new FacultyFrame(name).setVisible(true);
+                    dispose(); 
+                } 
+            }
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
